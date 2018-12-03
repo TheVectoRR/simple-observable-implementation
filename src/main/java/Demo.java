@@ -5,6 +5,7 @@ public class Demo {
         Integer[] numbers = {1, 1, 2, 3, 5, 8, 13, 21, 34};
         Observable<Integer> observable = Observable.fromArray(numbers);
         observable
+                .filter((v) -> v % 2 == 0)
                 .subscribe(System.out::println);
     }
 }

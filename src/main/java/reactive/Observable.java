@@ -1,7 +1,10 @@
 package reactive;
 
+import reactive.observable.operators.ObservableFilter;
+
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public abstract class Observable <T>{
     public static <T> ObservableFromArray<T> fromArray(T... items) {
@@ -24,6 +27,10 @@ public abstract class Observable <T>{
 
             }
         });
+    }
+
+    public final Observable<T> filter(final Predicate<? super T> predicate) {
+        return new ObservableFilter<>(this, predicate);
     }
 
     protected abstract void subscribeActual(Observer<? super T> myObserver);

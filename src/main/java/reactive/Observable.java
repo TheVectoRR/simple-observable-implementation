@@ -1,9 +1,11 @@
 package reactive;
 
 import reactive.observable.operators.ObservableFilter;
+import reactive.observable.operators.ObservableMap;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class Observable <T>{
@@ -31,6 +33,10 @@ public abstract class Observable <T>{
 
     public final Observable<T> filter(final Predicate<? super T> predicate) {
         return new ObservableFilter<>(this, predicate);
+    }
+
+    public final <R> Observable<R> map(final Function<? super T, ? extends R> mapper) {
+        return new ObservableMap<>(this, mapper);
     }
 
     protected abstract void subscribeActual(Observer<? super T> myObserver);

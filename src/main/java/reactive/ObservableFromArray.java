@@ -10,8 +10,8 @@ public class ObservableFromArray<T> extends Observable<T> {
     }
 
     @Override
-    protected void subscribeActual(final Observer<? super T> myObserver) {
+    protected void subscribeActual(final Observer<? super T> observer) {
         source.stream()
-                .forEach(v -> myObserver.onNext(v));
+                .forEach(v -> observer.onNext(v));
     }
 }

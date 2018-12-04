@@ -6,7 +6,7 @@ public class Demo {
         Observable<Integer> observable = Observable.fromArray(numbers);
         observable
                 .filter((v) -> v % 2 == 0)
-                .map((v) -> "the even number is: " + v)
+                .map((v) -> "an even number : " + v)
                 .subscribe(System.out::println);
     }
 }

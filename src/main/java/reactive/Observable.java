@@ -39,6 +39,6 @@ public abstract class Observable <T>{
         return new ObservableMap<>(this, mapper);
     }
 
-    protected abstract void subscribeActual(Observer<? super T> myObserver);
+    protected abstract void subscribeActual(Observer<? super T> observer);
 
 }

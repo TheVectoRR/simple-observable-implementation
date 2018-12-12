@@ -20,7 +20,7 @@ public class ObservableInterval extends Observable<Long> {
             }
         };
 
-        thread.run();
+        thread.start();
 
     }
 

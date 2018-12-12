@@ -1,5 +1,4 @@
 import reactive.Observable;
-import reactive.ObservableInterval;
 
 public class Demo {
     public static void main(final String[] args) {
@@ -10,7 +9,7 @@ public class Demo {
                 .map((v) -> "an even number : " + v)
                 .subscribe(System.out::println);
 
-        ObservableInterval observableInterval = new ObservableInterval();
+        Observable observableInterval = Observable.interval();
         observableInterval.subscribe(System.out::println);
     }
 }

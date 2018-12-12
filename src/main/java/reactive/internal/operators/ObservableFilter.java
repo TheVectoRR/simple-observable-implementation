@@ -1,4 +1,4 @@
-package reactive.observable.operators;
+package reactive.internal.operators;
 
 import reactive.Observable;
 import reactive.Observer;

@@ -1,4 +1,7 @@
-package reactive;
+package reactive.internal.operators.observable;
+
+import reactive.Observable;
+import reactive.Observer;
 
 public class ObservableInterval extends Observable<Long> {
     @Override

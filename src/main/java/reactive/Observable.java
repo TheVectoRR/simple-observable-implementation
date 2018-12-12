@@ -1,5 +1,6 @@
 package reactive;
 
+import reactive.internal.LambdaObserver;
 import reactive.internal.operators.ObservableFilter;
 import reactive.internal.operators.ObservableMap;
 import reactive.internal.operators.observable.ObservableFromArray;
@@ -19,35 +20,22 @@ public abstract class Observable <T>{
         return new ObservableInterval();
     }
 
-    public void subscribe(
+    public Disposable subscribe(
             Consumer<? super T> onNext,
             Consumer<? super Throwable> onError,
             Action onComplete
     ){
-        subscribeActual(new Observer<>() {
-            @Override
-            public void onNext(T t) {
-                onNext.accept(t);
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                onError.accept(e);
-            }
-
-            @Override
-            public void onComplete() {
-                onComplete.run();
-            }
-        });
+        var ls = new LambdaObserver<T>(onNext, onError, onComplete);
+        subscribeActual(ls);
+        return ls;
     }
 
-    public void subscribe(Consumer<? super T> onNext) {
-        subscribe(onNext, e -> {}, () -> {});
+    public Disposable subscribe(Consumer<? super T> onNext) {
+        return subscribe(onNext, e -> {}, () -> {});
     }
 
-    public void subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError) {
-        subscribe(onNext, onError, () -> {});
+    public Disposable subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError) {
+        return subscribe(onNext, onError, () -> {});
     }
 
     public final Observable<T> filter(final Predicate<? super T> predicate) {

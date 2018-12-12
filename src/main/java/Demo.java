@@ -1,7 +1,7 @@
 import reactive.Observable;
 
 public class Demo {
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws InterruptedException {
         Integer[] numbers = {1, 1, 2, 3, 5, 8, 13, 21, 34};
         Observable<Integer> observable = Observable.fromArray(numbers);
         observable
@@ -14,6 +14,10 @@ public class Demo {
                 );
 
         Observable observableInterval = Observable.interval();
-        observableInterval.subscribe(System.out::println);
+        var subscription = observableInterval.subscribe(System.out::println);
+
+        Thread.sleep(5000);
+
+        subscription.dispose();
     }
 }

@@ -19,22 +19,35 @@ public abstract class Observable <T>{
         return new ObservableInterval();
     }
 
-    public void subscribe(final Observer<? super T> observer){
-        subscribeActual(observer);
-    }
-
-    public void subscribe(Consumer<? super T> consumer) {
-        subscribe(new Observer<>() {
+    public void subscribe(
+            Consumer<? super T> onNext,
+            Consumer<? super Throwable> onError,
+            Action onComplete
+    ){
+        subscribeActual(new Observer<>() {
             @Override
             public void onNext(T t) {
-                consumer.accept(t);
+                onNext.accept(t);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                onError.accept(e);
             }
 
             @Override
             public void onComplete() {
-
+                onComplete.run();
             }
         });
+    }
+
+    public void subscribe(Consumer<? super T> onNext) {
+        subscribe(onNext, e -> {}, () -> {});
+    }
+
+    public void subscribe(Consumer<? super T> onNext, Consumer<? super Throwable> onError) {
+        subscribe(onNext, onError, () -> {});
     }
 
     public final Observable<T> filter(final Predicate<? super T> predicate) {

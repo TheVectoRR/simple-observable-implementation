@@ -15,7 +15,7 @@ public class ObservableInterval extends Observable<Long> {
                     try {
                         sleep(1000);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        observer.onError(e);
                     }
                     observer.onNext(i++);
                 }

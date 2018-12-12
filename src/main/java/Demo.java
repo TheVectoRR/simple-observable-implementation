@@ -7,7 +7,11 @@ public class Demo {
         observable
                 .filter((v) -> v % 2 == 0)
                 .map((v) -> "an even number : " + v)
-                .subscribe(System.out::println);
+                .subscribe(
+                        System.out::println,
+                        System.out::println,
+                        () -> System.out.println("done!")
+                );
 
         Observable observableInterval = Observable.interval();
         observableInterval.subscribe(System.out::println);

@@ -5,7 +5,7 @@ import reactive.Observer;
 
 import java.util.function.Predicate;
 
-public class ObservableFilter <T> extends Observable {
+public class ObservableFilter<T> extends Observable {
 
     private final Observable<T> source;
     private final Predicate<? super T> predicate;
@@ -20,10 +20,14 @@ public class ObservableFilter <T> extends Observable {
 
     @Override
     protected void subscribeActual(Observer observer) {
-        source.subscribe((v)->{
-            if (predicate.test(v)) {
-                observer.onNext(v);
-            }
-        });
+        source.subscribe(
+                (v) -> {
+                    if (predicate.test(v)) {
+                        observer.onNext(v);
+                    }
+                },
+                (e) -> observer.onError(e),
+                () -> observer.onComplete()
+        );
     }
 }

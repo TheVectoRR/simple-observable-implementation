@@ -21,6 +21,10 @@ public class ObservableMap<T, R> extends Observable {
 
     @Override
     protected void subscribeActual(final Observer observer) {
-        source.subscribe((v) -> observer.onNext(mapper.apply(v)));
+        source.subscribe(
+                (v) -> observer.onNext(mapper.apply(v)),
+                (e) -> observer.onError(e),
+                () -> observer.onComplete()
+        );
     }
 }

@@ -16,5 +16,6 @@ public class ObservableFromArray<T> extends Observable<T> {
     protected void subscribeActual(final Observer<? super T> observer) {
         source.stream()
                 .forEach(v -> observer.onNext(v));
+        observer.onComplete();
     }
 }

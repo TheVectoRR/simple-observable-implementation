@@ -20,6 +20,11 @@ public class LambdaObserver<T> implements Observer<T>, Disposable {
     }
 
     @Override
+    public void onSubscribe(Disposable d) {
+
+    }
+
+    @Override
     public void onNext(T t) {
         if (!isDisposed()) {
             onNext.accept(t);

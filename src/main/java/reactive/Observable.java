@@ -6,14 +6,13 @@ import reactive.internal.operators.ObservableMap;
 import reactive.internal.operators.observable.ObservableFromArray;
 import reactive.internal.operators.observable.ObservableInterval;
 
-import java.util.Arrays;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public abstract class Observable <T>{
     public static <T> ObservableFromArray<T> fromArray(T... items) {
-        return new ObservableFromArray<>(Arrays.asList(items));
+        return new ObservableFromArray<>(items);
     }
 
     public static ObservableInterval interval() {

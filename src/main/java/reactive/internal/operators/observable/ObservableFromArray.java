@@ -26,7 +26,7 @@ public class ObservableFromArray<T> extends Observable<T> {
 
         final T[] array;
 
-        volatile boolean disposed;
+        boolean disposed;
 
         FromArrayDisposable(Observer<? super T> actual, T[] array) {
             this.downstream = actual;

@@ -21,7 +21,7 @@ public class LambdaObserver<T> implements Observer<T>, Disposable {
 
     @Override
     public void onSubscribe(Disposable d) {
-
+        DisposableHelper.setOnce(this, d);
     }
 
     @Override
@@ -48,6 +48,7 @@ public class LambdaObserver<T> implements Observer<T>, Disposable {
     // is an atomic operation in RXJava2
     @Override
     public void dispose() {
+        DisposableHelper.dispose(this);
         isDisposed = true;
     }
 

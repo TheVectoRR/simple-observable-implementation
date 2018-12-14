@@ -14,6 +14,8 @@ public class DisposableHelper {
 
     private static final Map<UUID, Disposable> resourcesMap = new TreeMap<>();
 
+    private DisposableHelper(){}
+
     public static <T> void setOnce(LambdaObserver<T> obs, Disposable d) {
         resourcesMap.put(obs.getUuid(), d);
     }

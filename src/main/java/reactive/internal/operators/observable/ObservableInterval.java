@@ -5,6 +5,9 @@ import reactive.Observable;
 import reactive.Observer;
 
 public class ObservableInterval extends Observable<Long> {
+
+    private static boolean isRunning = true;
+
     @Override
     protected void subscribeActual(Observer<? super Long> observer) {
         Thread thread = new Thread() {
@@ -12,7 +15,7 @@ public class ObservableInterval extends Observable<Long> {
             Long i = 0l;
 
             public void run() {
-                while(true) {
+                while(isRunning) {
                     try {
                         sleep(1000);
                     } catch (InterruptedException e) {
@@ -44,7 +47,7 @@ public class ObservableInterval extends Observable<Long> {
 
         @Override
         public void dispose() {
-            this.thread.stop();
+            isRunning = false;
             disposed = true;
         }
 

@@ -4,6 +4,7 @@ import reactive.Action;
 import reactive.Disposable;
 import reactive.Observer;
 
+import java.util.UUID;
 import java.util.function.Consumer;
 
 public class LambdaObserver<T> implements Observer<T>, Disposable {
@@ -12,11 +13,13 @@ public class LambdaObserver<T> implements Observer<T>, Disposable {
     private Consumer<? super Throwable> onError;
     private Action onComplete;
     private boolean isDisposed = false;
+    private UUID uuid; // not in RXJava2
 
     public LambdaObserver(Consumer<? super T> onNext, Consumer<? super Throwable> onError, Action onComplete) {
         this.onNext = onNext;
         this.onError = onError;
         this.onComplete = onComplete;
+        uuid = UUID.randomUUID();
     }
 
     @Override
@@ -56,5 +59,9 @@ public class LambdaObserver<T> implements Observer<T>, Disposable {
     @Override
     public boolean isDisposed() {
         return isDisposed;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 }

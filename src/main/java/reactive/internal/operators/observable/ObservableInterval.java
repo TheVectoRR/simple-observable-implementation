@@ -6,43 +6,23 @@ import reactive.Observer;
 
 public class ObservableInterval extends Observable<Long> {
 
-    private static boolean isRunning = true;
-
     @Override
     protected void subscribeActual(Observer<? super Long> observer) {
-        Thread thread = new Thread() {
-
-            Long i = 0l;
-
-            public void run() {
-                while(isRunning) {
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        observer.onError(e);
-                    }
-                    observer.onNext(i++);
-                }
-
-            }
-        };
-
-        IntervalObserver d = new IntervalObserver(thread);
-
+        IntervalObserver d = new IntervalObserver(1000, observer);
         observer.onSubscribe(d);
-
         d.run();
-
     }
 
     static final class IntervalObserver implements Disposable {
 
-        final Thread thread;
+        private final Integer period;
+        private boolean disposed;
+        private boolean isRunning = true;
+        private Observer<? super Long> observer;
 
-        boolean disposed;
-
-        IntervalObserver(Thread thread) {
-            this.thread = thread;
+        IntervalObserver(Integer period, Observer<? super Long> observer) {
+            this.period = period;
+            this.observer = observer;
         }
 
         @Override
@@ -57,6 +37,20 @@ public class ObservableInterval extends Observable<Long> {
         }
 
         public void run() {
+            Thread thread = new Thread() {
+                Long i = 0l;
+
+                public void run() {
+                    while(isRunning) {
+                        try {
+                            sleep(period);
+                        } catch (InterruptedException e) {
+                            observer.onError(e);
+                        }
+                        observer.onNext(i++);
+                    }
+                }
+            };
             thread.start();
         }
 
